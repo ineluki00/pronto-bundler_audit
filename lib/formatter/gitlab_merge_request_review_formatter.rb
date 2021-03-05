@@ -11,7 +11,8 @@ module Pronto
     #      finding an issue in the Gemfile.lock file.
     class GitlabMergeRequestReviewFormatter
       def line_number(message, _)
-        if message.line
+        puts message
+        if defined?(message.line)
           if defined?(message.line.line)
             message.line.line.new_lineno
           elsif defined?(message.line.commit_line)
@@ -19,6 +20,8 @@ module Pronto
           else
             message.line.new_lineno
           end
+        else
+          $stderr.puts "Undefined method line for message: #{message}"
         end
       end
     end
